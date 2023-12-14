@@ -3,13 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <title>Все Сигареты</title>
+    <style>
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        tr {
+            border-bottom: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid black;
+        }
+    </style>
 </head>
 <body>
 
-<div th:each="ciga:${allCigarettes}">
-    <a th:text="${ciga.getName()}">name</a>
-    <a th:text="${ciga.getPrice()}">price</a>
+<table>
+    <thead>
+    <tr>
+        <th>Название</th>
+        <th>Цена</th>
+        <th>Описание</th>
+        <th>Дата производства</th>
+        <th>Срок годности</th>
+        <th>Добавки</th>
+        <th>Крепость</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="ciga:${allCigarettes}">
+        <td th:text="${ciga.getName()}"></td>
+        <td th:text="${ciga.getPrice()}"></td>
+        <td th:text="${ciga.getDescription()}"></td>
+        <td th:text="${ciga.getDateOfIssue()}"></td>
+        <td th:text="${ciga.getShelfLifeYear()}"></td>
+        <td th:text="${ciga.getAdditives()}"></td>
+        <td th:text="${ciga.getStrength()}"></td>
+    </tr>
+    </tbody>
+</table>
 
-</div>
 </body>
 </html>
