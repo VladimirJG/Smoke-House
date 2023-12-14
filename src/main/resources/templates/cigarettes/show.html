@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Сигареты</title>
+</head>
+<body>
+
+<p th:text="${oneCigarette.getName()}"></p>
+<p th:text="${oneCigarette.getPrice()}"></p>
+<p th:text="${oneCigarette.getDescription()}"></p>
+<p th:text="${oneCigarette.getDateOfIssue()}"></p>
+<p th:text="${oneCigarette.getShelfLifeYear()}"></p>
+<p th:text="${oneCigarette.getAdditives()}"></p>
+<p th:text="${oneCigarette.getStrength()}"></p>
+
+<a th:href="@{/cigarettes/{id}/edit(id=${oneCigarette.getId()})}">Edit</a>
+
+<form th:method="DELETE" th:action="@{/cigarettes/{id}(id=${oneCigarette.getId()})}">
+    <input type="submit" value="Delete">
+</form>
+
+</body>
+</html>

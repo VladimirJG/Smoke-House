@@ -1,12 +1,12 @@
 package ru.danilov.Smoke.House.controllers.visual;
 
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import ru.danilov.Smoke.House.models.Cigarettes;
 import ru.danilov.Smoke.House.services.CigarettesService;
 
@@ -29,19 +29,44 @@ public class CigarettesController {
     }
 
     @GetMapping("/{id}")
-    public Cigarettes getOneCigarette(@PathVariable("id") int id) {
-        return cigarettesService.findOneCigarette(id);
+    public String getOneCigarette(@PathVariable("id") int id, Model model) {
+        model.addAttribute("oneCigarette", cigarettesService.findOneCigarette(id));
+        return "cigarettes/show";
     }
 
-    public void createNewCigarette(Cigarettes cigarette) {
+    @GetMapping("/new")
+    public String newCigarette(@ModelAttribute("cigarette") Cigarettes cigarette) {
+        return "cigarettes/new";
+    }
+
+    @PostMapping
+    public String createNewCigarette(@ModelAttribute("cigarette") @Valid Cigarettes cigarette, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "cigarettes/new";
+        }
         cigarettesService.save(cigarette);
+        return "redirect:/cigarettes";
     }
 
-    public void update(int id, Cigarettes updateCigarette) {
-        cigarettesService.update(id, updateCigarette);
+    @GetMapping("/{id}/edit")
+    public String edit(Model model, @PathVariable("id") int id) {
+        model.addAttribute("editCigarette", cigarettesService.findOneCigarette(id));
+        return "cigarettes/edit";
     }
 
-    public void delete() {
+    @PatchMapping("/{id}")
+    public String update(@ModelAttribute("editCigarette") @Valid Cigarettes cigarette, BindingResult bindingResult,
+                         @PathVariable("id") int id) {
+        if (bindingResult.hasErrors()) {
+            return "cigarettes/edit";
+        }
+        cigarettesService.update(id, cigarette);
+        return "redirect:/cigarettes";
+    }
 
+    @DeleteMapping("/{id}")
+    public String delete(@PathVariable("id") int id) {
+        cigarettesService.delete(id);
+        return "redirect:/cigarettes";
     }
 }

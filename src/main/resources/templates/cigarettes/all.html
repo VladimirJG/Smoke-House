@@ -21,6 +21,7 @@
 <table>
     <thead>
     <tr>
+        <th>№</th>
         <th>Название</th>
         <th>Цена</th>
         <th>Описание</th>
@@ -32,6 +33,8 @@
     </thead>
     <tbody>
     <tr th:each="ciga:${allCigarettes}">
+        <!--<td th:href="@{/cigarettes/{id}(id=${ciga.getId()})}"></td>-->
+        <td th:text="${ciga.getId()}"></td>
         <td th:text="${ciga.getName()}"></td>
         <td th:text="${ciga.getPrice()}"></td>
         <td th:text="${ciga.getDescription()}"></td>
@@ -42,6 +45,10 @@
     </tr>
     </tbody>
 </table>
+<br/>
+<hr/>
+
+<a href="/cigarettes/new">Create new cigarettes</a>
 
 </body>
 </html>
