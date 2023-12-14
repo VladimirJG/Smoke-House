@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Все Сигареты</title>
+</head>
+<body>
+
+<div th:each="ciga:${allCigarettes}">
+    <a th:text="${ciga.getName()}">name</a>
+    <a th:text="${ciga.getPrice()}">price</a>
+
+</div>
+</body>
+</html>
