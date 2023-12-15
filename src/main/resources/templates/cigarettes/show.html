@@ -2,23 +2,66 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Сигареты</title>
+    <title>Подробности</title>
+    <style>
+        body {
+            background-image: url('/img/cigarette.jpg');
+            background-size: cover;
+            background-position: top;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr {
+            border-bottom: 1px solid black;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid aquamarine;
+        }
+        .cigarette-button {
+            display: inline-block;
+            padding: 10px 20px;
+            border: 3px solid #00bcd4;
+            border-radius: 5px;
+            background-color: #00bcd4;
+            color: black;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .cigarette-button:hover {
+            transform: scale(1.1);
+        }
+    </style>
 </head>
 <body>
 
 <p th:text="${oneCigarette.getName()}"></p>
+<hr>
 <p th:text="${oneCigarette.getPrice()}"></p>
+<hr>
 <p th:text="${oneCigarette.getDescription()}"></p>
+<hr>
 <p th:text="${oneCigarette.getDateOfIssue()}"></p>
+<hr>
 <p th:text="${oneCigarette.getShelfLifeYear()}"></p>
+<hr>
 <p th:text="${oneCigarette.getAdditives()}"></p>
+<hr>
 <p th:text="${oneCigarette.getStrength()}"></p>
+<hr>
+<br/>
 
-<a th:href="@{/cigarettes/{id}/edit(id=${oneCigarette.getId()})}">Edit</a>
+<a th:href="@{/cigarettes/{id}/edit(id=${oneCigarette.getId()})}" class="cigarette-button">Edit</a>
+<button th:onclick="|location.href='@{/cigarettes/{id}/delete(id=${oneCigarette.getId()})}'|" class="cigarette-button">Delete</button>
 
-<form th:method="DELETE" th:action="@{/cigarettes/{id}(id=${oneCigarette.getId()})}">
-    <input type="submit" value="Delete">
-</form>
 
 </body>
 </html>

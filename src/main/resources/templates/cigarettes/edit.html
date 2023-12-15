@@ -3,6 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <title>Внесение изменений</title>
+    <style>
+        body {
+            background-image: url('/img/cigarette.jpg');
+            background-size: cover;
+            background-position: top;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr {
+            border-bottom: 1px solid black;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid aquamarine;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            display: inline-block;
+            width: 200px;
+            text-align: right;
+            margin-right: 10px;
+        }
+
+        input {
+            display: inline-block;
+            width: 200px;
+            margin-bottom: 10px;
+        }
+
+        div {
+            display: inline-block;
+            width: 200px;
+        }
+        .cigarette-button {
+            display: inline-block;
+            padding: 10px 20px;
+            border: 3px solid #00bcd4;
+            border-radius: 5px;
+            background-color: #00bcd4;
+            color: black;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .cigarette-button:hover {
+            transform: scale(1.1);
+        }
+
+    </style>
 </head>
 <body>
 <form th:method="PATCH" th:action="@{/cigarettes/{id}(id=${editCigarette.getId()})}" th:object="${editCigarette}">
@@ -40,7 +100,7 @@
     <div style="color: red" th:if="${#fields.hasErrors('strength')}" th:errors="*{strength}">Strength error
     </div>
     <br/>
-    <input style="color: blue" type="submit" value="Update!"/>
+    <button type="submit" class="cigarette-button">Update!</button>
 </form>
 
 </body>
