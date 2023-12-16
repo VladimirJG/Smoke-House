@@ -16,11 +16,11 @@ create table Liquid
     price            int check ( price > 0 ) check ( price < 5000 ),
     description      varchar(200)              not null,
     date_of_issue    date default current_date not null,
-    shelf_life_year  int check ( shelf_life_year > 2015 ),
+    shelf_life_year  int check ( shelf_life_year > 1 ),
     volume           int check ( volume > 200 ) check ( volume < 1000 ),
     strength         varchar                   not null,
     nicotine_content int,
-    taste            varchar(100)
+    taste            varchar(100) not null
 );
 create table Disposable
 (

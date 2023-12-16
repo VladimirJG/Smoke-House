@@ -6,8 +6,11 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.danilov.Smoke.House.models.Cigarettes;
 import ru.danilov.Smoke.House.repositories.CigarettesRepository;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -20,7 +23,7 @@ public class CigarettesService {
     }
 
     public List<Cigarettes> allCigarettes() {
-        return cigarettesRepository.findAll();
+        return discount(cigarettesRepository.findAll());
     }
 
     public Cigarettes findOneCigarette(int id) {
@@ -42,5 +45,15 @@ public class CigarettesService {
     @Transactional
     public void delete(int id) {
         cigarettesRepository.deleteById(id);
+    }
+
+    private List<Cigarettes> discount(List<Cigarettes> cigarettes){
+        cigarettes.stream().map(c->{
+          if (LocalDate.now().getYear() - c.getDateOfIssue().getYear()>c.getShelfLifeYear()){
+              c.setPrice(c.getPrice()/2);
+          }
+            return c;
+        }).collect(Collectors.toList());
+        return cigarettes;
     }
 }

@@ -12,12 +12,12 @@ import ru.danilov.Smoke.House.services.CigarettesService;
 
 @Controller
 @RequestMapping("/cigarettes")
-public class CigarettesController {
+public class CigarettesVisualController {
 
     private final CigarettesService cigarettesService;
 
     @Autowired
-    public CigarettesController(CigarettesService cigarettesService) {
+    public CigarettesVisualController(CigarettesService cigarettesService) {
         this.cigarettesService = cigarettesService;
     }
 
