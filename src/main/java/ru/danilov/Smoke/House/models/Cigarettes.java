@@ -41,4 +41,7 @@ public class Cigarettes {
     @Column(name = "strength")
     @Enumerated(EnumType.STRING)
     private Strength strength;
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User owner;
 }
