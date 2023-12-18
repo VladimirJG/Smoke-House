@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Пользователь</title>
+</head>
+<body>
+<p th:text="${user.getName()+', ' + user.getDateOfBirth()}"></p>
+
+<div th:if="${cigarettes.isEmpty()}">
+    <p>Пользователь не выбрал сигареты</p>
+    <hr/>
+</div>
+
+<div th:if="${!cigarettes.isEmpty()}">
+    <hr/>
+    <b>Сигареты:</b>
+    <br/>
+    <table th:each="cigarette : ${cigarettes}">
+        <tr>
+            <td>
+                <span th:text="${cigarette.getName() + ', ' + cigarette.getPrice() + ', '
+                + cigarette.getAdditives() + ', ' + cigarette.getDescription() + ', ' + cigarette.getDateOfIssue()}">
+                </span>
+            </td>
+        </tr>
+    </table>
+    <hr/>
+
+</div>
+</body>
+</html>

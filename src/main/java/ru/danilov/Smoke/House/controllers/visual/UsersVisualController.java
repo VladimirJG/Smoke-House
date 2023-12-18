@@ -27,7 +27,7 @@ public class UsersVisualController {
         return "users/index";
     }
 
-    @GetMapping("/id")
+    @GetMapping("/{id}")
     public String getOneUser(@PathVariable("id") @Valid int id, Model model) {
         model.addAttribute("user", usersService.getOneUser(id));
         model.addAttribute("cigarettes", usersService.getAllCigarettesByUser(id));
