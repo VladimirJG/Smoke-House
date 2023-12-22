@@ -47,6 +47,9 @@ public class Cigarettes {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User owner;
 
+    @Transient
+    private boolean expired;
+
     public Cigarettes(String name, int price, String description, LocalDate dateOfIssue, int shelfLifeYear, String additives, Strength strength) {
         this.name = name;
         this.price = price;
