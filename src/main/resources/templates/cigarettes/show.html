@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Подробности</title>
@@ -22,6 +22,7 @@
             padding: 10px;
             border: 1px solid aquamarine;
         }
+
         .cigarette-button {
             display: inline-block;
             padding: 10px 20px;
@@ -59,8 +60,33 @@
 <hr>
 <br/>
 
-<a th:href="@{/cigarettes/{id}/edit(id=${oneCigarette.getId()})}" class="cigarette-button">Edit</a>
-<button th:onclick="|location.href='@{/cigarettes/{id}/delete(id=${oneCigarette.getId()})}'|" class="cigarette-button">Delete</button>
+<div th:if="${owner}">
+    <span>Сигареты принадлежат: </span><span th:text="${owner.getId()}"></span>
+    <form th:method="PATCH" th:action="@{/cigarettes/{id}/release(id=${oneCigarette.getId()})}">
+        <input type="submit" value="Убрать у юзера">
+    </form>
+</div>
+
+<div th:if="${allUsers}">
+    <span>Кому передать сигареты</span>
+    <form th:method="PATCH" th:action="@{/cigarettes/{id}/assign(id=${oneCigarette.getId()})}">
+        <label for="user"> Выбрать юзера</label>
+        <select th:object="${allUsers.get(id)}" th:field="*{id}" id="user">
+            <option th:each="user : ${allUsers}" th:value="${user.getId()}" th:text="${user.getName()}">
+            </option>
+        </select>
+        <input type="submit" value="Назначить юзеру">
+    </form>
+</div>
+
+
+<hr>
+<br/>
+
+<a th:href="@{/cigarettes/{id}/edit(id=${oneCigarette.getId()})}" class="cigarette-button">Редактировать</a>
+<button th:onclick="|location.href='@{/cigarettes/{id}/delete(id=${oneCigarette.getId()})}'|" class="cigarette-button">
+    Удалить
+</button>
 
 
 </body>

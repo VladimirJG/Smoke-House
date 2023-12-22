@@ -6,12 +6,14 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "Cigarettes")
 public class Cigarettes {
@@ -44,4 +46,14 @@ public class Cigarettes {
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User owner;
+
+    public Cigarettes(String name, int price, String description, LocalDate dateOfIssue, int shelfLifeYear, String additives, Strength strength) {
+        this.name = name;
+        this.price = price;
+        this.description = description;
+        this.dateOfIssue = dateOfIssue;
+        this.shelfLifeYear = shelfLifeYear;
+        this.additives = additives;
+        this.strength = strength;
+    }
 }
