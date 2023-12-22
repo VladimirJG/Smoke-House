@@ -10,6 +10,7 @@ import ru.danilov.Smoke.House.repositories.UsersRepository;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -53,5 +54,10 @@ public class UsersService {
             return user.get().getCigarettesList();
 
         return Collections.emptyList();
+    }
+
+    public Optional<User> findUserByName(String name) {
+        return Optional.ofNullable(usersRepository.findAll()
+                .stream().filter(u -> u.getName().equals(name)).toList().get(0));
     }
 }

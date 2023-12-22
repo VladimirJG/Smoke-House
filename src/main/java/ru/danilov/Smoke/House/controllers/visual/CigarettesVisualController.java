@@ -8,17 +8,23 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.danilov.Smoke.House.models.Cigarettes;
+import ru.danilov.Smoke.House.models.User;
 import ru.danilov.Smoke.House.services.CigarettesService;
+import ru.danilov.Smoke.House.services.UsersService;
+
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/cigarettes")
 public class CigarettesVisualController {
 
     private final CigarettesService cigarettesService;
+    private final UsersService usersService;
 
     @Autowired
-    public CigarettesVisualController(CigarettesService cigarettesService) {
+    public CigarettesVisualController(CigarettesService cigarettesService, UsersService usersService) {
         this.cigarettesService = cigarettesService;
+        this.usersService = usersService;
     }
 
     @GetMapping()
@@ -31,6 +37,12 @@ public class CigarettesVisualController {
     @GetMapping("/{id}")
     public String getOneCigarette(@PathVariable("id") int id, Model model) {
         model.addAttribute("oneCigarette", cigarettesService.findOneCigarette(id));
+        Optional<User> cigarettesOwner = cigarettesService.getCigarettesOwner(id);
+
+        if (cigarettesOwner.isPresent())
+            model.addAttribute("owner", cigarettesOwner.get());
+        else
+            model.addAttribute("allUsers", usersService.getAllUsers());
         return "cigarettes/show";
     }
 
@@ -68,5 +80,17 @@ public class CigarettesVisualController {
     public String delete(@PathVariable("id") int id) {
         cigarettesService.delete(id);
         return "redirect:/cigarettes";
+    }
+
+    @PatchMapping("/{id}/release")
+    public String release(@PathVariable("id") int id) {
+        cigarettesService.release(id);
+        return "redirect:/cigarettes/" + id;
+    }
+
+    @PatchMapping("/{id}/assign")
+    public String assign(@PathVariable("id") int id, @ModelAttribute("user") User selectedUser) {
+        cigarettesService.assign(id, selectedUser);
+        return "redirect:/cigarettes/" + id;
     }
 }

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.danilov.Smoke.House.models.Cigarettes;
+import ru.danilov.Smoke.House.models.User;
 import ru.danilov.Smoke.House.repositories.CigarettesRepository;
 
 import java.time.LocalDate;
@@ -47,13 +48,27 @@ public class CigarettesService {
         cigarettesRepository.deleteById(id);
     }
 
-    private List<Cigarettes> discount(List<Cigarettes> cigarettes){
-        cigarettes.stream().map(c->{
-          if (LocalDate.now().getYear() - c.getDateOfIssue().getYear()>c.getShelfLifeYear()){
-              c.setPrice(c.getPrice()/2);
-          }
+    private List<Cigarettes> discount(List<Cigarettes> cigarettes) {
+        cigarettes.stream().map(c -> {
+            if (LocalDate.now().getYear() - c.getDateOfIssue().getYear() > c.getShelfLifeYear()) {
+                c.setPrice(c.getPrice() / 2);
+            }
             return c;
         }).collect(Collectors.toList());
         return cigarettes;
+    }
+
+    public Optional<User> getCigarettesOwner(int id) {
+        return Optional.ofNullable(cigarettesRepository.findById(id).get().getOwner());
+    }
+
+    @Transactional
+    public void release(int id) {
+        cigarettesRepository.findById(id).get().setOwner(null);
+    }
+
+    @Transactional
+    public void assign(int id, User selectedUser) {
+        cigarettesRepository.findById(id).get().setOwner(selectedUser);
     }
 }
