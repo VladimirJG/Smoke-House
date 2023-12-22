@@ -8,7 +8,7 @@ create table Cigarettes
     shelf_life_year int check ( shelf_life_year > 1 ),
     additives       varchar(200),
     strength        varchar                   not null,
-    user_id         int                       references Users (id) on DELETE SET NULL
+    user_id         int                       not null references Users (id) on DELETE SET NULL
 );
 create table Liquid
 (
@@ -51,18 +51,18 @@ create table Vapes
 );
 
 
-insert into Cigarettes(name, price, description, date_of_issue, shelf_life_year, additives, strength)
+insert into Cigarettes(name, price, description, date_of_issue, shelf_life_year, additives, strength, user_id)
 VALUES ('Parlament', 239, 'Ультратонкие сигареты с насыщенным вкусом и приятным ароматом',
-        '2016-12-17', 2, 'Ментол', 'LIGHT');
-insert into Cigarettes(name, price, description, date_of_issue, shelf_life_year, additives, strength)
+        '2016-12-17', 2, 'Ментол', 'LIGHT', 1);
+insert into Cigarettes(name, price, description, date_of_issue, shelf_life_year, additives, strength, user_id)
 VALUES ('Winston', 185, 'Крепкие сигареты из лучших сортов табака Гватемалы',
-        '2023-01-31', 3, 'Без добавок', 'STRONG');
-insert into Cigarettes(name, price, description, date_of_issue, shelf_life_year, additives, strength)
+        '2023-01-31', 3, 'Без добавок', 'STRONG', 1);
+insert into Cigarettes(name, price, description, date_of_issue, shelf_life_year, additives, strength, user_id)
 VALUES ('Русский стиль', 201, 'Средней крепости сигареты для мидлов',
-        '2020-02-12', 2, 'Арабский табак', 'MIDDLE');
-insert into Cigarettes(name, price, description, date_of_issue, shelf_life_year, additives, strength)
+        '2020-02-12', 2, 'Арабский табак', 'MIDDLE', 2);
+insert into Cigarettes(name, price, description, date_of_issue, shelf_life_year, additives, strength, user_id)
 VALUES ('Kent Brilliance', 179, 'Аромат кофе',
-        '2022-09-23', 2, 'Кофе', 'LIGHT');
+        '2022-09-23', 2, 'Кофе', 'LIGHT', 3);
 
 create table Users
 (
@@ -83,5 +83,9 @@ show datestyle;
 
 select *
 from Cigarettes;
+select *
+from Users;
 drop table Cigarettes;
 truncate table Cigarettes;
+
+select U.name, C.name from Users U join Cigarettes C on U.id = C.user_id;

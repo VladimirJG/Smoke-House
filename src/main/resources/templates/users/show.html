@@ -8,7 +8,7 @@
 <p th:text="${user.getName()+', ' + user.getDateOfBirth()}"></p>
 
 <div th:if="${cigarettes.isEmpty()}">
-    <p>Пользователь не выбрал сигареты</p>
+    <p>User не выбрал сигареты</p>
     <hr/>
 </div>
 
@@ -26,7 +26,15 @@
         </tr>
     </table>
     <hr/>
-
 </div>
+
+<form th:method="GET" th:action="@{/users/{id}/edit(id=${user.getId()})}">
+    <input type="submit" value="Изменить"/>
+</form>
+
+<form th:method="DELETE" th:action="@{/users/{id}(id=${user.getId()})}">
+    <input type="submit" value="Удалить"/>
+</form>
+
 </body>
 </html>

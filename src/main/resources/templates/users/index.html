@@ -9,5 +9,7 @@
     <a th:href="@{/allUsers/{id}(id=${user.getId()})}"
        th:text="${user.getName()+', ' + user.getDateOfBirth()}"></a>
 </div>
+
+<a href="/users/new">Добавить человека</a>
 </body>
 </html>
