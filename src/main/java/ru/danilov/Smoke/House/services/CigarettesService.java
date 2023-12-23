@@ -56,7 +56,7 @@ public class CigarettesService {
                 c.setPrice(c.getPrice() / 2);
             }
             return c;
-        }).collect(Collectors.toList());
+        });
         return cigarettes;
     }
 

@@ -7,7 +7,6 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.danilov.Smoke.House.models.Cigarettes;
 import ru.danilov.Smoke.House.models.User;
 import ru.danilov.Smoke.House.repositories.UsersRepository;
-import ru.danilov.Smoke.House.util.UserValidator;
 
 import java.util.Collections;
 import java.util.List;
@@ -17,12 +16,10 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 public class UsersService {
     private final UsersRepository usersRepository;
-    private final UserValidator userValidator;
 
     @Autowired
-    public UsersService(UsersRepository usersRepository, UserValidator userValidator) {
+    public UsersService(UsersRepository usersRepository) {
         this.usersRepository = usersRepository;
-        this.userValidator = userValidator;
     }
 
     public List<User> getAllUsers() {
