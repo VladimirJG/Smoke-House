@@ -25,6 +25,6 @@ public class UserValidator implements Validator {
     public void validate(Object target, Errors errors) {
         User user = (User) target;
         if (usersService.findUserByName(user.getName()).isPresent())
-            errors.rejectValue("Name","","Имя занято");
+            errors.rejectValue("name","","Имя уже используется");
     }
 }

@@ -37,10 +37,10 @@ public class CigarettesVisualController {
     @GetMapping("/{id}")
     public String getOneCigarette(@PathVariable("id") int id, Model model) {
         model.addAttribute("oneCigarette", cigarettesService.findOneCigarette(id));
-        Optional<User> cigarettesOwner = cigarettesService.getCigarettesOwner(id);
+        User cigarettesOwner = cigarettesService.getCigarettesOwner(id);
 
-        if (cigarettesOwner.isPresent())
-            model.addAttribute("owner", cigarettesOwner.get());
+        if (cigarettesOwner != null)
+            model.addAttribute("owner", cigarettesOwner);
         else
             model.addAttribute("allUsers", usersService.getAllUsers());
         return "cigarettes/show";

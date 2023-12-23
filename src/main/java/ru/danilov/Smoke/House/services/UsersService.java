@@ -1,25 +1,28 @@
 package ru.danilov.Smoke.House.services;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.danilov.Smoke.House.models.Cigarettes;
 import ru.danilov.Smoke.House.models.User;
 import ru.danilov.Smoke.House.repositories.UsersRepository;
+import ru.danilov.Smoke.House.util.UserValidator;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
 public class UsersService {
     private final UsersRepository usersRepository;
+    private final UserValidator userValidator;
 
     @Autowired
-    public UsersService(UsersRepository usersRepository) {
+    public UsersService(UsersRepository usersRepository, UserValidator userValidator) {
         this.usersRepository = usersRepository;
+        this.userValidator = userValidator;
     }
 
     public List<User> getAllUsers() {
@@ -47,17 +50,19 @@ public class UsersService {
         usersRepository.deleteById(id);
     }
 
+    @Transactional
     public List<Cigarettes> getAllCigarettesByUser(int id) {
         Optional<User> user = usersRepository.findById(id);
 
-        if (user.isPresent())
+        if (user.isPresent()) {
+            Hibernate.initialize(user.get().getCigarettesList());
             return user.get().getCigarettesList();
+        }
 
         return Collections.emptyList();
     }
 
     public Optional<User> findUserByName(String name) {
-        return Optional.ofNullable(usersRepository.findAll()
-                .stream().filter(u -> u.getName().equals(name)).toList().get(0));
+        return usersRepository.findByName(name);
     }
 }
