@@ -54,9 +54,9 @@ public class UsersService {
         if (user.isPresent()) {
             Hibernate.initialize(user.get().getCigarettesList());
             return user.get().getCigarettesList();
+        } else {
+            return Collections.emptyList();
         }
-
-        return Collections.emptyList();
     }
 
     public Optional<User> findUserByName(String name) {

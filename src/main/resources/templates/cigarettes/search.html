@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Поиск</title>
+</head>
+<body>
+
+<form method="POST" th:action="@{/cigarettes/search}">
+    <label for="query">Введите запрос: </label>
+    <input type="text" id="query" name="query">
+    <br/>
+    <input type="submit" value="Поиск">
+</form>
+
+<div th:if="${cigarettes}">
+    <div th:if="${cigarettes.isEmpty()}">
+        <span>Не найдено</span>
+    </div>
+
+    <div th:each="cigarette : ${cigarettes}">
+        <p th:text="${cigarette.getName() + ', ' + cigarette.getDateOfIssue() + ', ' + cigarette.getPrice()}"></p>
+
+        <div th:if="${cigarette.getOwner() != null}">
+            <span>Сигареты у: </span><span th:text="${cigarette.getOwner().getName()}"></span>
+        </div>
+
+        <div th:if="${cigarette.getOwner() == null}">
+            <span>Сигареты не назначены</span>
+        </div>
+
+        <hr/>
+
+    </div>
+</div>
+
+</body>
+</html>

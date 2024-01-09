@@ -21,7 +21,6 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(name = "name")
-    @NotEmpty
     private String name;
     @Column(name = "date_of_birth")
     private LocalDate dateOfBirth;

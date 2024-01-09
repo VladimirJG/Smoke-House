@@ -28,21 +28,26 @@ public class CigarettesVisualController {
     }
 
     @GetMapping()
-    public String getAllCigarettes(Model model) {
-        model.addAttribute("allCigarettes", cigarettesService.allCigarettes());
+    public String getAllCigarettes(Model model, @RequestParam(value = "page", required = false) Integer page,
+                                   @RequestParam(value = "cigarettes_Per_Page", required = false) Integer cigarettesPerPage,
+                                   @RequestParam(value = "sort_By_Price", required = false) boolean sortByPrice) {
+        if (page == null || cigarettesPerPage == null)
+            model.addAttribute("allCigarettes", cigarettesService.allCigarettes(sortByPrice));
+        else
+            model.addAttribute("allCigarettes", cigarettesService.findWithPagination(page, cigarettesPerPage, sortByPrice));
         return "cigarettes/all";
 
     }
 
     @GetMapping("/{id}")
-    public String getOneCigarette(@PathVariable("id") int id, Model model) {
+    public String getOneCigarette(@PathVariable("id") int id, Model model, @ModelAttribute("user") User user) {
         model.addAttribute("oneCigarette", cigarettesService.findOneCigarette(id));
         User cigarettesOwner = cigarettesService.getCigarettesOwner(id);
 
         if (cigarettesOwner != null)
             model.addAttribute("owner", cigarettesOwner);
         else
-            model.addAttribute("allUsers", usersService.getAllUsers());
+            model.addAttribute("usersAll", usersService.getAllUsers());
         return "cigarettes/show";
     }
 
@@ -92,5 +97,16 @@ public class CigarettesVisualController {
     public String assign(@PathVariable("id") int id, @ModelAttribute("user") User selectedUser) {
         cigarettesService.assign(id, selectedUser);
         return "redirect:/cigarettes/" + id;
+    }
+
+    @GetMapping("/search")
+    public String searchPage() {
+        return "cigarettes/search";
+    }
+
+    @PostMapping("/search")
+    public String makeSearch(Model model, @RequestParam("query") String query) {
+        model.addAttribute("cigarettes", cigarettesService.searchByName(query));
+        return "cigarettes/search";
     }
 }

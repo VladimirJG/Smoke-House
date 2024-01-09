@@ -5,8 +5,9 @@
     <title>Пользователь</title>
 </head>
 <body>
-<p th:text="${user.getName()+', ' + user.getDateOfBirth()}"></p>
-
+<p th:text="${user.getName()}"></p>
+<hr/>
+<p th:text="${user.getDateOfBirth()}"></p>
 <div th:if="${cigarettes.isEmpty()}">
     <p>User не выбрал сигареты</p>
     <hr/>
@@ -20,7 +21,9 @@
         <tr>
             <td>
                 <span th:text="${cigarette.getName() + ', ' + cigarette.getPrice() + ', '
-                + cigarette.getAdditives() + ', ' + cigarette.getDescription() + ', ' + cigarette.getDateOfIssue()}">
+                + cigarette.getAdditives() + ', ' + cigarette.getDescription() + ', ' + cigarette.getDateOfIssue()}"
+                th:style="${cigarette.isExpired()} ? 'color:red' : 'color:black'">
+                    cigarette
                 </span>
             </td>
         </tr>

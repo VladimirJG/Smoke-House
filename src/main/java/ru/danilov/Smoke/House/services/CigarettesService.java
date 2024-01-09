@@ -1,6 +1,8 @@
 package ru.danilov.Smoke.House.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.danilov.Smoke.House.models.Cigarettes;
@@ -9,9 +11,7 @@ import ru.danilov.Smoke.House.repositories.CigarettesRepository;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Locale;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -23,8 +23,18 @@ public class CigarettesService {
         this.cigarettesRepository = cigarettesRepository;
     }
 
-    public List<Cigarettes> allCigarettes() {
-        return discount(cigarettesRepository.findAll());
+    public List<Cigarettes> allCigarettes(boolean sortByPrice) {
+        if (sortByPrice)
+            return discount(cigarettesRepository.findAll(Sort.by("price")));
+        else
+            return discount(cigarettesRepository.findAll());
+    }
+
+    public List<Cigarettes> findWithPagination(Integer page, Integer cigarettesPerPage, boolean sortByPrice) {
+        if (sortByPrice)
+            return discount(cigarettesRepository.findAll(PageRequest.of(page, cigarettesPerPage, Sort.by("price"))).getContent());
+        else
+            return discount(cigarettesRepository.findAll(PageRequest.of(page, cigarettesPerPage)).getContent());
     }
 
     public Cigarettes findOneCigarette(int id) {

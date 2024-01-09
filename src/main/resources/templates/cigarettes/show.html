@@ -35,9 +35,29 @@
             font-weight: bold;
             text-align: center;
             transition: all 0.3s ease;
+            float: left;
         }
 
         .cigarette-button:hover {
+            transform: scale(1.1);
+        }
+
+        .cigarette_del-button {
+            display: inline-block;
+            padding: 10px 20px;
+            border: 3px solid #00bcd4;
+            border-radius: 5px;
+            background-color: #00bcd4;
+            color: black;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+            transition: all 0.3s ease;
+            float: right;
+        }
+
+        .cigarette_del-button:hover {
             transform: scale(1.1);
         }
     </style>
@@ -61,18 +81,18 @@
 <br/>
 
 <div th:if="${owner}">
-    <span>Сигареты принадлежат: </span><span th:text="${owner.getId()}"></span>
+    <span>Сигареты принадлежат: </span><span th:text="${owner.getName()}"></span>
     <form th:method="PATCH" th:action="@{/cigarettes/{id}/release(id=${oneCigarette.getId()})}">
         <input type="submit" value="Убрать у юзера">
     </form>
 </div>
 
-<div th:if="${allUsers}">
+<div th:if="${usersAll}">
     <span>Кому передать сигареты</span>
     <form th:method="PATCH" th:action="@{/cigarettes/{id}/assign(id=${oneCigarette.getId()})}">
         <label for="user"> Выбрать юзера</label>
-        <select th:object="${allUsers.get(id)}" th:field="*{id}" id="user">
-            <option th:each="user : ${allUsers}" th:value="${user.getId()}" th:text="${user.getName()}">
+        <select th:object="${user}" th:field="*{id}" id="user">
+            <option th:each="user : ${usersAll}" th:value="${user.getId()}" th:text="${user.getName()}">
             </option>
         </select>
         <input type="submit" value="Назначить юзеру">
@@ -84,10 +104,19 @@
 <br/>
 
 <a th:href="@{/cigarettes/{id}/edit(id=${oneCigarette.getId()})}" class="cigarette-button">Редактировать</a>
-<button th:onclick="|location.href='@{/cigarettes/{id}/delete(id=${oneCigarette.getId()})}'|" class="cigarette-button">
+
+<form th:method="DELETE" th:action="@{/cigarettes/{id}(id=${oneCigarette.getId()})}">
+    <input type="submit" value="Удалить" class="cigarette_del-button"/>
+</form>
+<!--<button th:onclick="|location.href='@{/cigarettes/{id}/delete(id=${oneCigarette.getId()})}'|" class="cigarette-button">
     Удалить
-</button>
+</button>-->
 
-
+<!--<div class="cigarette-buttons">
+    <a th:href="@{/cigarettes/{id}/edit(id=${oneCigarette.getId()})}" class="cigarette-button">Редактировать</a>
+    <form th:method="DELETE" th:action="@{/cigarettes/{id}(id=${oneCigarette.getId()})}">
+        <input type="submit" value="Удалить" class="cigarette-button"/>
+    </form>
+</div>-->
 </body>
 </html>
