@@ -51,13 +51,11 @@ public class CigarettesService {
     }
 
     private List<Cigarettes> discount(List<Cigarettes> cigarettes) {
-        cigarettes.stream().map(c -> {
+        return cigarettes.stream().peek(c -> {
             if (LocalDate.now().getYear() - c.getDateOfIssue().getYear() > c.getShelfLifeYear()) {
                 c.setPrice(c.getPrice() / 2);
             }
-            return c;
-        });
-        return cigarettes;
+        }).toList();
     }
 
     public User getCigarettesOwner(int id) {
