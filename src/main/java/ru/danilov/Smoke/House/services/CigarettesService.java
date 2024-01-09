@@ -54,6 +54,7 @@ public class CigarettesService {
         return cigarettes.stream().peek(c -> {
             if (LocalDate.now().getYear() - c.getDateOfIssue().getYear() > c.getShelfLifeYear()) {
                 c.setPrice(c.getPrice() / 2);
+                c.setExpired(true);
             }
         }).toList();
     }
