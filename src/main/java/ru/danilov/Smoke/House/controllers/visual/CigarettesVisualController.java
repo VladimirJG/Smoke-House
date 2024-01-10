@@ -12,6 +12,8 @@ import ru.danilov.Smoke.House.models.User;
 import ru.danilov.Smoke.House.services.CigarettesService;
 import ru.danilov.Smoke.House.services.UsersService;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/cigarettes")
 public class CigarettesVisualController {
@@ -40,9 +42,9 @@ public class CigarettesVisualController {
     @GetMapping("/{id}")
     public String getOneCigarette(@PathVariable("id") int id, Model model, @ModelAttribute("user") User user) {
         model.addAttribute("oneCigarette", cigarettesService.findOneCigarette(id));
-        User cigarettesOwner = cigarettesService.getCigarettesOwner(id);
+        List<User> cigarettesOwner = cigarettesService.getCigarettesOwner(id);
 
-        if (cigarettesOwner != null)
+        if (!cigarettesOwner.isEmpty())
             model.addAttribute("owner", cigarettesOwner);
         else
             model.addAttribute("usersAll", usersService.getAllUsers());

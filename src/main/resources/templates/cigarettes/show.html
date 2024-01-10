@@ -81,10 +81,38 @@
 <br/>
 
 <div th:if="${owner}">
-    <span>Сигареты принадлежат: </span><span th:text="${owner.getName()}"></span>
+    <span>Сигареты есть у: </span>
+    <table>
+        <tbody>
+        <tr th:each="user:${owner}">
+            <td th:text="${user.getName()}"></td>
+
+            <td><form th:method="PATCH" th:action="@{/cigarettes/{cigaretteId}/release/{userId}(cigaretteId=${oneCigarette.getId()}, userId=${user.getId()})}">
+                <button type="submit">Убрать у юзера</button>
+            </form></td>
+        </tr>
+        </tbody>
+    </table>
+
+
+
+
+
+
+
+    <!--<table th:each="user : ${owner}">
+        <tr>
+            <td>
+                <span th:text="${user.getName()}">
+                    user
+                </span>
+            </td>
+        </tr>
+    </table>
+
     <form th:method="PATCH" th:action="@{/cigarettes/{id}/release(id=${oneCigarette.getId()})}">
         <input type="submit" value="Убрать у юзера">
-    </form>
+    </form>-->
 </div>
 
 <div th:if="${usersAll}">

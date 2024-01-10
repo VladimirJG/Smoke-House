@@ -10,6 +10,7 @@ import ru.danilov.Smoke.House.models.User;
 import ru.danilov.Smoke.House.repositories.CigarettesRepository;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,7 +47,7 @@ public class CigarettesService {
     public void update(int id, Cigarettes updateCigarette) {
         Cigarettes cigarette = cigarettesRepository.findById(id).get();
         updateCigarette.setId(id);
-        updateCigarette.setOwner(cigarette.getOwner());
+        updateCigarette.setUsersList(cigarette.getUsersList());
         cigarettesRepository.save(updateCigarette);
     }
 
@@ -69,8 +70,8 @@ public class CigarettesService {
         }).toList();
     }
 
-    public User getCigarettesOwner(int id) {
-        return cigarettesRepository.findById(id).map(Cigarettes::getOwner).orElse(null);
+    public List<User> getCigarettesOwner(int id) {
+        return cigarettesRepository.findById(id).map(Cigarettes::getUsersList).orElse(null);
     }
 
     public List<Cigarettes> searchByName(String query) {
@@ -79,11 +80,12 @@ public class CigarettesService {
 
     @Transactional
     public void release(int id) {
-        cigarettesRepository.findById(id).ifPresent(c -> c.setOwner(null));
+        cigarettesRepository.findById(id).ifPresent(c -> c.setUsersList(null));
     }
 
     @Transactional
     public void assign(int id, User selectedUser) {
-        cigarettesRepository.findById(id).ifPresent(c -> c.setOwner(selectedUser));
+        List<User> list = cigarettesRepository.findById(id).map(Cigarettes::getUsersList).orElse(new ArrayList<>());
+        list.add(selectedUser);
     }
 }

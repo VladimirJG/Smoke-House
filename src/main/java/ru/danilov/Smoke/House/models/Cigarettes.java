@@ -50,13 +50,4 @@ public class Cigarettes {
     @Transient
     private boolean expired;
 
-    public Cigarettes(String name, int price, String description, LocalDate dateOfIssue, int shelfLifeYear, String additives, Strength strength) {
-        this.name = name;
-        this.price = price;
-        this.description = description;
-        this.dateOfIssue = dateOfIssue;
-        this.shelfLifeYear = shelfLifeYear;
-        this.additives = additives;
-        this.strength = strength;
-    }
 }
