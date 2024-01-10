@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
@@ -43,9 +44,8 @@ public class Cigarettes {
     @Column(name = "strength")
     @Enumerated(EnumType.STRING)
     private Strength strength;
-    @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private User owner;
+    @ManyToMany(mappedBy = "cigarettesList")
+    private List<User> usersList;
 
     @Transient
     private boolean expired;

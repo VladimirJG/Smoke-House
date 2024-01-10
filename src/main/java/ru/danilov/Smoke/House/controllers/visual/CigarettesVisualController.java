@@ -12,8 +12,6 @@ import ru.danilov.Smoke.House.models.User;
 import ru.danilov.Smoke.House.services.CigarettesService;
 import ru.danilov.Smoke.House.services.UsersService;
 
-import java.util.Optional;
-
 @Controller
 @RequestMapping("/cigarettes")
 public class CigarettesVisualController {
