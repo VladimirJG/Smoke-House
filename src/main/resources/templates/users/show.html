@@ -20,11 +20,20 @@
     <table th:each="cigarette : ${cigarettes}">
         <tr>
             <td>
-                <span th:text="${cigarette.getName() + ', ' + cigarette.getPrice() + ', '
+                <div th:if="${cigarette.isExpired()}">
+                    <span th:text="${cigarette.getName() + ', ' + cigarette.getPrice()/2 + ', '
                 + cigarette.getAdditives() + ', ' + cigarette.getDescription() + ', ' + cigarette.getDateOfIssue()}"
-                th:style="${cigarette.isExpired()} ? 'color:red' : 'color:black'">
+                          th:style=" 'color:red'">
                     cigarette
                 </span>
+                </div>
+                <div th:if="${!cigarette.isExpired()}">
+                <span th:text="${cigarette.getName() + ', ' + cigarette.getPrice() + ', '
+                + cigarette.getAdditives() + ', ' + cigarette.getDescription() + ', ' + cigarette.getDateOfIssue()}"
+                      th:style="'color:black'">
+                    cigarette
+                </span>
+                </div>
             </td>
         </tr>
     </table>
@@ -41,3 +50,4 @@
 
 </body>
 </html>
+

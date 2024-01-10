@@ -12,6 +12,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import static ru.danilov.Smoke.House.util.Helper.hasDiscount;
+
 @Service
 @Transactional(readOnly = true)
 public class UsersService {
@@ -53,7 +55,8 @@ public class UsersService {
 
         if (user.isPresent()) {
             Hibernate.initialize(user.get().getCigarettesList());
-            return user.get().getCigarettesList();
+
+            return hasDiscount(user.get().getCigarettesList());
         } else {
             return Collections.emptyList();
         }
@@ -62,4 +65,5 @@ public class UsersService {
     public Optional<User> findUserByName(String name) {
         return usersRepository.findByName(name);
     }
+
 }
