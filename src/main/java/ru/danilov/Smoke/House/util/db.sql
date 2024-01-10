@@ -8,7 +8,7 @@ create table Cigarettes
     shelf_life_year int check ( shelf_life_year > 1 ),
     additives       varchar(200),
     strength        varchar                   not null,
-    user_id         int                       not null references Users (id) on DELETE SET NULL
+    user_id         int                       references Users (id) on DELETE SET NULL
 );
 create table Liquid
 (
@@ -85,7 +85,12 @@ select *
 from Cigarettes;
 select *
 from Users;
-drop table Cigarettes;
+/*drop table Cigarettes;
+drop table Users;*/
 truncate table Cigarettes;
 
-select U.name, C.name from Users U join Cigarettes C on U.id = C.user_id;
+select U.name, C.name
+from Users U
+         join Cigarettes C on U.id = C.user_id;
+
+delete from Cigarettes where id=3
