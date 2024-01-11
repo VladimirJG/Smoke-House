@@ -6,7 +6,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import ru.danilov.Smoke.House.models.Cigarettes;
 import ru.danilov.Smoke.House.models.User;
+import ru.danilov.Smoke.House.services.CigarettesService;
 import ru.danilov.Smoke.House.services.UsersService;
 import ru.danilov.Smoke.House.util.UserValidator;
 
@@ -16,11 +18,13 @@ public class UsersVisualController {
 
     private final UsersService usersService;
     private final UserValidator userValidator;
+    private final CigarettesService cigarettesService;
 
     @Autowired
-    public UsersVisualController(UsersService usersService, UserValidator userValidator) {
+    public UsersVisualController(UsersService usersService, UserValidator userValidator, CigarettesService cigarettesService) {
         this.usersService = usersService;
         this.userValidator = userValidator;
+        this.cigarettesService = cigarettesService;
     }
 
     @GetMapping()
@@ -30,9 +34,10 @@ public class UsersVisualController {
     }
 
     @GetMapping("/{id}")
-    public String getOneUser(@PathVariable("id") int id, Model model) {
+    public String getOneUser(@PathVariable("id") int id, Model model, @ModelAttribute("cigarette") Cigarettes selectedCigarette) {
         model.addAttribute("user", usersService.getOneUser(id));
         model.addAttribute("cigarettes", usersService.getAllCigarettesByUser(id));
+        model.addAttribute("allCigarettes", cigarettesService.allCigarettes(false));
         return "users/show";
 
     }
@@ -70,5 +75,11 @@ public class UsersVisualController {
     public String delete(@PathVariable("id") int id) {
         usersService.delete(id);
         return "redirect:/users";
+    }
+
+    @PatchMapping("/{id}/new_cigarettes")
+    public String addNewCigaretteToUser(@PathVariable("id") int id, @ModelAttribute("cigarette") Cigarettes selectedCigarette) {
+        usersService.addNewCigaretteToUser(selectedCigarette, id);
+        return "redirect:/users/" + id;
     }
 }

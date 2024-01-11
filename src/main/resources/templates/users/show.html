@@ -40,6 +40,14 @@
     <hr/>
 </div>
 
+<form th:method="PATCH" th:action="@{/users/{id}/new_cigarettes(id=${user.getId()})}">
+    <label for="cigarette">Выбор сигарет</label>
+    <select th:object="${cigarette}" th:field="*{id}" id="cigarette">
+        <option th:each="cigarette : ${allCigarettes}" th:value="${cigarette.getId()}" th:text="${cigarette.getName()}"></option>
+    </select>
+    <input type="submit" value="Выбрать сигареты">
+</form>
+
 <form th:method="GET" th:action="@{/users/{id}/edit(id=${user.getId()})}">
     <input type="submit" value="Изменить"/>
 </form>

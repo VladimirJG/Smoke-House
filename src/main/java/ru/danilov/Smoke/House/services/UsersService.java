@@ -6,8 +6,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.danilov.Smoke.House.models.Cigarettes;
 import ru.danilov.Smoke.House.models.User;
+import ru.danilov.Smoke.House.repositories.CigarettesRepository;
 import ru.danilov.Smoke.House.repositories.UsersRepository;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -20,7 +22,7 @@ public class UsersService {
     private final UsersRepository usersRepository;
 
     @Autowired
-    public UsersService(UsersRepository usersRepository) {
+    public UsersService(UsersRepository usersRepository, CigarettesRepository cigarettesRepository) {
         this.usersRepository = usersRepository;
     }
 
@@ -66,4 +68,8 @@ public class UsersService {
         return usersRepository.findByName(name);
     }
 
+    @Transactional
+    public void addNewCigaretteToUser(Cigarettes selectedCigarette, int id) {
+        usersRepository.findById(id).ifPresent(c->c.getCigarettesList().add(selectedCigarette));
+    }
 }
