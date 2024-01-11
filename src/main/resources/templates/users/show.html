@@ -69,18 +69,10 @@
             <td><a th:href="@{/cigarettes/{id}(id=${cigarette.getId()})}" th:text="${cigarette.getName()}"/></td>
             <td th:if="${cigarette.isExpired()}" th:style="'color:red'" th:text="${cigarette.getPrice()/2}"></td>
             <td th:if="${!cigarette.isExpired()}" th:text="${cigarette.getPrice()}"></td>
-
-
-
             <td>
                 <form th:method="PATCH"
                       th:action="@{/users/{id}/del_cigarette(id=${user.getId()})}">
-                     <!-- th:object="${cigarette}" th:field="*{id}" id="ciga_del" th:value="${cigarette.getId()}">-->
                     <input type="hidden" th:value="${cigarette.getId()}" name="cId">
-
-
-
-
                     <input type="submit" value="Убрать">
                 </form>
             </td>
@@ -96,7 +88,7 @@
         <option th:each="cigarette : ${allCigarettes}" th:value="${cigarette.getId()}"
                 th:text="${cigarette.getName()}"></option>
     </select>
-    <input type="submit" value="Выбрать сигареты">
+    <input type="submit" value="Добавить сигареты">
 </form>
 
 <form th:method="GET" th:action="@{/users/{id}/edit(id=${user.getId()})}">

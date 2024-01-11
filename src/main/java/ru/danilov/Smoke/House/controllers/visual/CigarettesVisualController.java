@@ -87,18 +87,6 @@ public class CigarettesVisualController {
         return "redirect:/cigarettes";
     }
 
-    @PatchMapping("/{id}/release")
-    public String release(@PathVariable("id") int id) {
-        cigarettesService.release(id);
-        return "redirect:/cigarettes/" + id;
-    }
-
-    @PatchMapping("/{id}/assign")
-    public String assign(@PathVariable("id") int id, @ModelAttribute("user") User selectedUser) {
-        cigarettesService.assign(id, selectedUser);
-        return "redirect:/cigarettes/" + id;
-    }
-
     @GetMapping("/search")
     public String searchPage() {
         return "cigarettes/search";

@@ -85,49 +85,11 @@
     <table>
         <tbody>
         <tr th:each="user:${owner}">
-            <td th:text="${user.getName()}"></td>
-
-            <td><form th:method="PATCH" th:action="@{/cigarettes/{cigaretteId}/release/{userId}(cigaretteId=${oneCigarette.getId()}, userId=${user.getId()})}">
-                <button type="submit">Убрать у юзера</button>
-            </form></td>
+            <td><a th:href="@{/users/{id}(id=${user.getId()})}" th:text="${user.getName()}"/></td>
         </tr>
         </tbody>
     </table>
-
-
-
-
-
-
-
-    <!--<table th:each="user : ${owner}">
-        <tr>
-            <td>
-                <span th:text="${user.getName()}">
-                    user
-                </span>
-            </td>
-        </tr>
-    </table>
-
-    <form th:method="PATCH" th:action="@{/cigarettes/{id}/release(id=${oneCigarette.getId()})}">
-        <input type="submit" value="Убрать у юзера">
-    </form>-->
 </div>
-
-<div th:if="${usersAll}">
-    <span>Кому передать сигареты</span>
-    <form th:method="PATCH" th:action="@{/cigarettes/{id}/assign(id=${oneCigarette.getId()})}">
-        <label for="user"> Выбрать юзера</label>
-        <select th:object="${user}" th:field="*{id}" id="user">
-            <option th:each="user : ${usersAll}" th:value="${user.getId()}" th:text="${user.getName()}">
-            </option>
-        </select>
-        <input type="submit" value="Назначить юзеру">
-    </form>
-</div>
-
-
 <hr>
 <br/>
 
@@ -136,15 +98,6 @@
 <form th:method="DELETE" th:action="@{/cigarettes/{id}(id=${oneCigarette.getId()})}">
     <input type="submit" value="Удалить" class="cigarette_del-button"/>
 </form>
-<!--<button th:onclick="|location.href='@{/cigarettes/{id}/delete(id=${oneCigarette.getId()})}'|" class="cigarette-button">
-    Удалить
-</button>-->
 
-<!--<div class="cigarette-buttons">
-    <a th:href="@{/cigarettes/{id}/edit(id=${oneCigarette.getId()})}" class="cigarette-button">Редактировать</a>
-    <form th:method="DELETE" th:action="@{/cigarettes/{id}(id=${oneCigarette.getId()})}">
-        <input type="submit" value="Удалить" class="cigarette-button"/>
-    </form>
-</div>-->
 </body>
 </html>

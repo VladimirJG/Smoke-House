@@ -10,7 +10,6 @@ import ru.danilov.Smoke.House.models.User;
 import ru.danilov.Smoke.House.repositories.CigarettesRepository;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -78,14 +77,4 @@ public class CigarettesService {
         return cigarettesRepository.findByNameStartingWith(query);
     }
 
-    @Transactional
-    public void release(int id) {
-        cigarettesRepository.findById(id).ifPresent(c -> c.setUsersList(null));
-    }
-
-    @Transactional
-    public void assign(int id, User selectedUser) {
-        List<User> list = cigarettesRepository.findById(id).map(Cigarettes::getUsersList).orElse(new ArrayList<>());
-        list.add(selectedUser);
-    }
 }
