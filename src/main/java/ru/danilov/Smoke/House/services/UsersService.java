@@ -9,7 +9,6 @@ import ru.danilov.Smoke.House.models.User;
 import ru.danilov.Smoke.House.repositories.CigarettesRepository;
 import ru.danilov.Smoke.House.repositories.UsersRepository;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -20,10 +19,12 @@ import static ru.danilov.Smoke.House.util.Helper.hasDiscount;
 @Transactional(readOnly = true)
 public class UsersService {
     private final UsersRepository usersRepository;
+    private final CigarettesRepository cigarettesRepository;
 
     @Autowired
     public UsersService(UsersRepository usersRepository, CigarettesRepository cigarettesRepository) {
         this.usersRepository = usersRepository;
+        this.cigarettesRepository = cigarettesRepository;
     }
 
     public List<User> getAllUsers() {
@@ -70,6 +71,15 @@ public class UsersService {
 
     @Transactional
     public void addNewCigaretteToUser(Cigarettes selectedCigarette, int id) {
-        usersRepository.findById(id).ifPresent(c->c.getCigarettesList().add(selectedCigarette));
+        usersRepository.findById(id).ifPresent(c -> c.getCigarettesList().add(selectedCigarette));
+    }
+
+    @Transactional
+    public void putAwayCigarette(int id, int cigId) {
+        Cigarettes cigarette = cigarettesRepository.findById(cigId).orElse(null);
+        usersRepository.findById(id).ifPresent(c -> c.getCigarettesList().remove(cigarette));
+
+
     }
 }
+
