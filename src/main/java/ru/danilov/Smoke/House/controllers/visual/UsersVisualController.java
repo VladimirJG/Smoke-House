@@ -86,7 +86,6 @@ public class UsersVisualController {
     @PatchMapping("/{id}/del_cigarette")
     public String putAwayCigarette(@PathVariable("id") int id, @RequestParam(name = "cId") int cigId) {
         usersService.putAwayCigarette(id, cigId);
-        System.out.println(cigId);
         return "redirect:/users/" + id;
     }
 }

@@ -77,7 +77,7 @@ public class UsersService {
         User user = usersRepository.findById(id).orElse(null);
         assert user != null;
         if (user.getCigarettesList().contains(ciga))
-            user.getCigarettesList().get(user.getCigarettesList().indexOf(ciga)).setCount( user.getCigarettesList().get(user.getCigarettesList().indexOf(ciga)).getCount()+1);
+            user.getCigarettesList().get(user.getCigarettesList().indexOf(ciga)).setCount(user.getCigarettesList().get(user.getCigarettesList().indexOf(ciga)).getCount() + 1);
         else {
             assert ciga != null;
             ciga.setCount(1);
@@ -89,9 +89,12 @@ public class UsersService {
     @Transactional
     public void putAwayCigarette(int id, int cigId) {
         Cigarettes cigarette = cigarettesRepository.findById(cigId).orElse(null);
-        usersRepository.findById(id).ifPresent(c -> c.getCigarettesList().remove(cigarette));
-
-
+        usersRepository.findById(id).ifPresent(c -> {
+            if (c.getCigarettesList().get(c.getCigarettesList().indexOf(cigarette)).getCount() == 1)
+                c.getCigarettesList().remove(cigarette);
+            else
+                c.getCigarettesList().get(c.getCigarettesList().indexOf(cigarette)).setCount(c.getCigarettesList().get(c.getCigarettesList().indexOf(cigarette)).getCount() - 1);
+        });
     }
 }
 
