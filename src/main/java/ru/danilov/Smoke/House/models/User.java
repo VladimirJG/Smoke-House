@@ -26,6 +26,9 @@ public class User {
     @JoinTable(name = "Users_Cigarettes", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "cigarette_id"))
     private List<Cigarettes> cigarettesList;
 
+    @ManyToMany
+    @JoinTable(name = "Users_Disposable", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "disposable_id"))
+    private List<DisposableVapes> disposableVapes;
 
     public User(String name, LocalDate dateOfBirth) {
         this.name = name;

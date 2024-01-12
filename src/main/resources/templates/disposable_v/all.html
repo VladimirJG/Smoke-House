@@ -1,24 +1,28 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Все Сигареты</title>
+    <title>Одноразовые электронки</title>
     <style>
         body {
-            background-image: url('/img/cigarette.jpg');
+            background-image: url('/img/dVaip.jpg');
             background-size: cover;
             background-position: top;
         }
+
         tr:nth-child(even) {
             background-color: #f2f2f2;
         }
+
         tr {
             border-bottom: 1px solid black;
         }
+
         th, td {
             padding: 10px;
             border: 1px solid aquamarine;
         }
+
         .cigarette-button {
             display: inline-block;
             padding: 10px 20px;
@@ -50,25 +54,26 @@
         <th>Срок годности</th>
         <th>Добавки</th>
         <th>Крепость</th>
-        <th>Подробнее</th>
+        <th>Вкус</th>
+        <th>Количество тяг</th>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="ciga:${allCigarettes}">
-        <td th:text="${ciga.getName()}"></td>
-        <td th:text="${ciga.getPrice()}"></td>
-        <td th:text="${ciga.getDescription()}"></td>
-        <td th:text="${ciga.getDateOfIssue()}"></td>
-        <td th:text="${ciga.getShelfLifeYear()}"></td>
-        <td th:text="${ciga.getAdditives()}"></td>
-        <td th:text="${ciga.getStrength()}"></td>
-        <td><a th:href="@{/cigarettes/{id}(id=${ciga.getId()})}">Подробнее</a></td>
+    <tr th:each="vape:${DV}">
+        <td th:href="@{/DV/{id}(id=${vape.getId()})}" th:text="${vape.getName()}"></td>
+        <td th:text="${vape.getPrice()}"></td>
+        <td th:text="${vape.getDescription()}"></td>
+        <td th:text="${vape.getDateOfIssue()}"></td>
+        <td th:text="${vape.getShelfLifeYear()}"></td>
+        <td th:text="${vape.getNicotineContent()}"></td>
+        <td th:text="${vape.getStrength()}"></td>
+        <td th:text="${vape.getTaste()}"></td>
+        <td th:text="${vape.getNumberOfPuffs()}"></td>
     </tr>
     </tbody>
 </table>
 <br/>
 <hr/>
-<a href="/cigarettes/new" class="cigarette-button">Добавить сигареты</a>
-
+<a href="/disposable_v/new" class="cigarette-button">+Вэйпик разовый</a>
 </body>
 </html>
