@@ -5,27 +5,49 @@
     <title>Пользователь</title>
     <style>
         body {
-            /*background-image: url('/img/cigarette.jpg');*/
+            background-image: url('/img/johnny.jpg');
             background-size: cover;
             background-position: top;
         }
 
         tr:nth-child(even) {
-            background-color: #f2f2f2;
+            background-color: #78f5ea;
         }
 
         tr {
-            border-bottom: 1px solid black;
+            border-bottom: 1px solid navy;
         }
 
         th, td {
             padding: 10px;
             border: 1px solid aquamarine;
+            color: navy; /* цвет текста по умолчанию */
+        }
+
+        th {
+            background-color: #b5bdbc; /* цвет фона заголовка */
+        }
+
+        td {
+            background-color: green; /* цвет фона ячейки */
+        }
+
+        tr:nth-child(even) td {
+            background-color: #969e9d; /* цвет фона четных строк */
+        }
+
+        tr:nth-child(odd) td {
+            background-color: #ddd; /* цвет фона нечетных строк */
+        }
+
+        tr:hover td {
+            background-color: cyan; /* цвет фона при наведении на ячейку */
+            color: black; /* цвет текста при наведении на ячейку */
         }
 
         .cigarette-button {
             display: inline-block;
-            padding: 10px 20px;
+            padding: 2px 6px;
             border: 3px solid #00bcd4;
             border-radius: 5px;
             background-color: #00bcd4;
@@ -40,42 +62,62 @@
         .cigarette-button:hover {
             transform: scale(1.1);
         }
+
+        .cigarette_del-button {
+            display: inline-block;
+            padding: 2px 6px;
+            border: 3px solid #00bcd4;
+            border-radius: 5px;
+            background-color: #00bcd4;
+            color: black;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+            transition: all 0.3s ease;
+            float: right;
+        }
+
+        .cigarette_del-button:hover {
+            transform: scale(1.1);
+        }
     </style>
 </head>
 <body>
-<p th:text="${user.getName()}"></p>
+<p th:text="${user.getName() + ', ' + user.getDateOfBirth()}" style="color: #78f5ea"></p>
 <hr/>
-<p th:text="${user.getDateOfBirth()}"></p>
+<form th:method="GET" th:action="@{/users/{id}/edit(id=${user.getId()})}">
+    <input type="submit" value="Изменить" class="cigarette-button"/>
+</form>
+
 <div th:if="${cigarettes.isEmpty()}">
-    <p>User не выбрал сигареты</p>
+    <p style="color: #78f5ea">User не выбрал сигареты </p>
     <hr/>
 </div>
 
 <div th:if="${!cigarettes.isEmpty()}">
     <hr/>
-    <b>Сигареты у юзера:</b>
+    <b style="color: #78f5ea">Сигареты у юзера:</b>
     <br/>
     <table>
         <thead>
         <tr>
-            <th>Id#</th>
             <th>Название</th>
             <th>Цена</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="cigarette:${cigarettes}">
-            <td th:text="${cigarette.getId()}"></td>
             <td><a th:href="@{/cigarettes/{id}(id=${cigarette.getId()})}" th:text="${cigarette.getName()}"/></td>
             <td th:if="${cigarette.isExpired()}" th:style="'color:red'" th:text="${cigarette.getPrice()/2}"></td>
             <td th:if="${!cigarette.isExpired()}" th:text="${cigarette.getPrice()}"></td>
-            <td>
+            <th>
                 <form th:method="PATCH"
                       th:action="@{/users/{id}/del_cigarette(id=${user.getId()})}">
                     <input type="hidden" th:value="${cigarette.getId()}" name="cId">
-                    <input type="submit" value="Убрать">
+                    <input type="submit" value="Убрать" class="cigarette-button">
                 </form>
-            </td>
+            </th>
         </tr>
         </tbody>
     </table>
@@ -83,20 +125,17 @@
 </div>
 
 <form th:method="PATCH" th:action="@{/users/{id}/new_cigarettes(id=${user.getId()})}">
-    <label for="cigarette">Выбор сигарет</label>
+    <label style="color: #78f5ea" for="cigarette">Выбор сигарет</label>
     <select th:object="${cigarette}" th:field="*{id}" id="cigarette">
         <option th:each="cigarette : ${allCigarettes}" th:value="${cigarette.getId()}"
                 th:text="${cigarette.getName()}"></option>
     </select>
-    <input type="submit" value="Добавить сигареты">
+    <input type="submit" value="Добавить сигареты" class="cigarette-button">
 </form>
 
-<form th:method="GET" th:action="@{/users/{id}/edit(id=${user.getId()})}">
-    <input type="submit" value="Изменить"/>
-</form>
 
 <form th:method="DELETE" th:action="@{/users/{id}(id=${user.getId()})}">
-    <input type="submit" value="Удалить"/>
+    <input type="submit" value="Обнулить usera" class="cigarette_del-button"/>
 </form>
 
 </body>

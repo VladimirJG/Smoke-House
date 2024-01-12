@@ -43,7 +43,9 @@ public class UsersService {
 
     @Transactional
     public void update(int id, User updateUser) {
+        List<Cigarettes> cigarettesList = usersRepository.findById(id).get().getCigarettesList();
         updateUser.setId(id);
+        updateUser.setCigarettesList(cigarettesList);
         usersRepository.save(updateUser);
     }
 
