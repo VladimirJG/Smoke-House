@@ -75,9 +75,11 @@ public class UsersService {
     public void addNewCigaretteToUser(Cigarettes selectedCigarette, int id) {
         Cigarettes ciga = cigarettesRepository.findById(selectedCigarette.getId()).orElse(null);
         User user = usersRepository.findById(id).orElse(null);
+        assert user != null;
         if (user.getCigarettesList().contains(ciga))
             user.getCigarettesList().get(user.getCigarettesList().indexOf(ciga)).setCount( user.getCigarettesList().get(user.getCigarettesList().indexOf(ciga)).getCount()+1);
         else {
+            assert ciga != null;
             ciga.setCount(1);
             user.getCigarettesList().add(ciga);
         }

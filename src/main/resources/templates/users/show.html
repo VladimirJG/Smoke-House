@@ -85,7 +85,7 @@
 </head>
 <body>
 <p th:text="${user.getName() + ', ' + user.getDateOfBirth()}" style="color: #78f5ea"></p>
-<hr/>
+<br/>
 <form th:method="GET" th:action="@{/users/{id}/edit(id=${user.getId()})}">
     <input type="submit" value="Изменить" class="cigarette-button"/>
 </form>
@@ -110,8 +110,8 @@
         <tbody>
         <tr th:each="cigarette:${cigarettes}">
             <td><a th:href="@{/cigarettes/{id}(id=${cigarette.getId()})}" th:text="${cigarette.getName()}"/></td>
-            <td th:if="${cigarette.isExpired()}" th:style="'color:red'" th:text="${cigarette.getPrice()/2}"></td>
-            <td th:if="${!cigarette.isExpired()}" th:text="${cigarette.getPrice()}"></td>
+            <td th:if="${cigarette.isExpired()}" th:style="'color:red'" th:text="${cigarette.getPrice()*cigarette.getCount()}"></td>
+            <td th:if="${!cigarette.isExpired()}" th:text="${cigarette.getPrice()*cigarette.getCount()}"></td>
             <td th:text="${cigarette.getCount()}"></td>
             <th>
                 <form th:method="PATCH"
@@ -123,7 +123,7 @@
         </tr>
         </tbody>
     </table>
-    <hr/>
+    <br/>
 </div>
 
 <form th:method="PATCH" th:action="@{/users/{id}/new_cigarettes(id=${user.getId()})}">
