@@ -48,7 +48,8 @@ public class Cigarettes {
     private Strength strength;
     @ManyToMany(mappedBy = "cigarettesList")
     private List<User> usersList;
-
+    @Column(name = "quantity")
+    private Integer count;
     @Transient
     private boolean expired;
 

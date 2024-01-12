@@ -73,8 +73,16 @@ public class UsersService {
 
     @Transactional
     public void addNewCigaretteToUser(Cigarettes selectedCigarette, int id) {
-        usersRepository.findById(id).ifPresent(c -> c.getCigarettesList().add(selectedCigarette));
+        Cigarettes ciga = cigarettesRepository.findById(selectedCigarette.getId()).orElse(null);
+        User user = usersRepository.findById(id).orElse(null);
+        if (user.getCigarettesList().contains(ciga))
+            user.getCigarettesList().get(user.getCigarettesList().indexOf(ciga)).setCount( user.getCigarettesList().get(user.getCigarettesList().indexOf(ciga)).getCount()+1);
+        else {
+            ciga.setCount(1);
+            user.getCigarettesList().add(ciga);
+        }
     }
+
 
     @Transactional
     public void putAwayCigarette(int id, int cigId) {

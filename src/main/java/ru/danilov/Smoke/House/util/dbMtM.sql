@@ -103,4 +103,8 @@ insert into Users_Cigarettes(user_id, cigarette_id) VALUES (2,4);
 insert into Users_Cigarettes(user_id, cigarette_id) VALUES (3,3);
 insert into Users_Cigarettes(user_id, cigarette_id) VALUES (3,1);
 
-select Users.name from Users join Users_Cigarettes UC on Users.id = UC.user_id join Cigarettes C on C.id = UC.cigarette_id where cigarette_id = 1
+select Users.name from Users join Users_Cigarettes UC on Users.id = UC.user_id join Cigarettes C on C.id = UC.cigarette_id where cigarette_id = 1;
+
+truncate table Users_Cigarettes;
+
+alter table Cigarettes add quantity int
