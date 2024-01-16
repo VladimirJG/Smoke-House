@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Разовая электронка</title>
+    <style>
+        body {
+            background-image: url('/img/dVaip.jpg');
+            background-size: cover;
+            background-position: top;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr {
+            border-bottom: 1px solid black;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid aquamarine;
+        }
+
+        .cigarette-button {
+            display: inline-block;
+            padding: 10px 20px;
+            border: 3px solid #00bcd4;
+            border-radius: 5px;
+            background-color: #00bcd4;
+            color: black;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+            transition: all 0.3s ease;
+            float: left;
+        }
+
+        .cigarette-button:hover {
+            transform: scale(1.1);
+        }
+
+        .cigarette_del-button {
+            display: inline-block;
+            padding: 10px 20px;
+            border: 3px solid #00bcd4;
+            border-radius: 5px;
+            background-color: #00bcd4;
+            color: black;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+            transition: all 0.3s ease;
+            float: right;
+        }
+
+        .cigarette_del-button:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+
+<p th:text="${oneDV.getName()}"></p>
+<hr>
+<p th:text="${oneDV.getPrice()}"></p>
+<hr>
+<p th:text="${oneDV.getDescription()}"></p>
+<hr>
+<p th:text="${oneDV.getDateOfIssue()}"></p>
+<hr>
+<p th:text="${oneDV.getShelfLifeYear()}"></p>
+<hr>
+<p th:text="${oneDV.getStrength()}"></p>
+<hr>
+<p th:text="${oneDV.getTaste()}"></p>
+<hr>
+<p th:text="${oneDV.getNicotineContent()}"></p>
+<hr>
+<p th:text="${oneDV.getNumberOfPuffs()}"></p>
+<hr>
+<br/>
+<div th:if="${uList}">
+    <span>Электронка есть у :</span>
+    <table>
+        <tbody>
+        <tr th:each="user:${uList}">
+            <td><a th:href="@{/users/{id}(id=${user.getId()})}" th:text="${user.getName()}"/></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<hr>
+<br/>
+
+<a th:href="@{/disposable_v/{id}/edit(id=${oneDV.getId()})}" class="cigarette-button">Редактировать</a>
+
+<form th:method="DELETE" th:action="@{/disposable_v/{id}(id=${oneDV.getId()})}">
+    <input type="submit" value="Удалить" class="cigarette_del-button"/>
+</form>
+
+
+
+</body>
+</html>
