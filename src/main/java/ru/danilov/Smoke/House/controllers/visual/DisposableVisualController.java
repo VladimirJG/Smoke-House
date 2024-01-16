@@ -53,4 +53,26 @@ public class DisposableVisualController {
         return "redirect:/disposable_v";
     }
 
+    @GetMapping("/{id}/edit")
+    public String edit(Model model, @PathVariable("id") int id) {
+        model.addAttribute("editDV", disposableService.findOne(id));
+        return "disposable_v/editD";
+    }
+
+    @PatchMapping("/{id}")
+    public String update(@ModelAttribute("editDV") @Valid DisposableVapes vape, BindingResult bindingResult,
+                         @PathVariable("id") int id) {
+        if (bindingResult.hasErrors()) {
+            return "disposable_v/editD";
+        }
+        disposableService.update(vape, id);
+        return "redirect:/disposable_v";
+    }
+
+    @DeleteMapping("/{id}")
+    public String delete(@PathVariable("id") int id) {
+        disposableService.delete(id);
+        return "redirect:/disposable_v";
+    }
+
 }
