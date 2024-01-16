@@ -56,11 +56,12 @@
         <th>Крепость</th>
         <th>Вкус</th>
         <th>Количество тяг</th>
+        <th>Цвет</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="vape:${DV}">
-        <td th:href="@{/DV/{id}(id=${vape.getId()})}" th:text="${vape.getName()}"></td>
+        <td><a th:href="@{/disposable_v/{id}(id=${vape.getId()})}" th:text="${vape.getName()}"></a></td>
         <td th:text="${vape.getPrice()}"></td>
         <td th:text="${vape.getDescription()}"></td>
         <td th:text="${vape.getDateOfIssue()}"></td>
@@ -69,11 +70,12 @@
         <td th:text="${vape.getStrength()}"></td>
         <td th:text="${vape.getTaste()}"></td>
         <td th:text="${vape.getNumberOfPuffs()}"></td>
+        <td th:text="${vape.getColor()}"></td>
     </tr>
     </tbody>
 </table>
 <br/>
 <hr/>
-<a href="/disposable_v/new" class="cigarette-button">+Вэйпик разовый</a>
+<a href="/disposable_v/newDV" class="cigarette-button">+Вэйпик разовый</a>
 </body>
 </html>

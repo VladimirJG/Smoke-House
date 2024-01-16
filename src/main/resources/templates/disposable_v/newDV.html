@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Создание</title>
+    <style>
+        body {
+            background-image: url('/img/dVaip.jpg');
+            background-size: cover;
+            background-position: top;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr {
+            border-bottom: 1px solid black;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid aquamarine;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            display: inline-block;
+            width: 200px;
+            text-align: right;
+            margin-right: 10px;
+        }
+
+        input {
+            display: inline-block;
+            width: 200px;
+            margin-bottom: 10px;
+        }
+
+        div {
+            display: inline-block;
+            width: 200px;
+        }
+        .cigarette-button {
+            display: inline-block;
+            padding: 10px 20px;
+            border: 3px solid #00bcd4;
+            border-radius: 5px;
+            background-color: #00bcd4;
+            color: black;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .cigarette-button:hover {
+            transform: scale(1.1);
+        }
+
+    </style>
+</head>
+<body>
+<form th:method="POST" th:action="@{/disposable_v}" th:object="${dVape}">
+    <label for="name">Enter name:</label>
+    <input type="text" th:field="*{name}" id="name"/>
+    <div style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name error</div>
+    <br/>
+    <label for="price">Enter price:</label>
+    <input type="text" th:field="*{price}" id="price"/>
+    <div style="color: red" th:if="${#fields.hasErrors('price')}" th:errors="*{price}">Price error</div>
+    <br/>
+    <label for="description">Enter description:</label>
+    <input type="text" th:field="*{description}" id="description"/>
+    <div style="color: red" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Description error
+    </div>
+    <br/>
+    <label for="dateOfIssue">Enter date of issue (dd/mm/yyyy):</label>
+    <input type="text" th:field="*{dateOfIssue}" id="dateOfIssue"/>
+    <div style="color: red" th:if="${#fields.hasErrors('dateOfIssue')}" th:errors="*{dateOfIssue}">Date of issue error
+    </div>
+    <br/>
+    <label for="shelfLifeYear">Enter shelf life year:</label>
+    <input type="text" th:field="*{shelfLifeYear}" id="shelfLifeYear"/>
+    <div style="color: red" th:if="${#fields.hasErrors('shelfLifeYear')}" th:errors="*{shelfLifeYear}">Shelf life year
+        error
+    </div>
+    <br/>
+    <label for="strength">Enter strength:</label>
+    <input type="text" th:field="*{strength}" id="strength"/>
+    <div style="color: red" th:if="${#fields.hasErrors('strength')}" th:errors="*{strength}">Strength error
+    </div>
+    <br/>
+    <label for="taste">Enter taste:</label>
+    <input type="text" th:field="*{taste}" id="taste"/>
+    <div style="color: red" th:if="${#fields.hasErrors('taste')}" th:errors="*{taste}">Taste error
+    </div>
+    <br/>
+    <label for="nicotineContent">Enter nicotineContent:</label>
+    <input type="text" th:field="*{nicotineContent}" id="nicotineContent"/>
+    <div style="color: red" th:if="${#fields.hasErrors('nicotineContent')}" th:errors="*{nicotineContent}">Nicotine
+        error
+    </div>
+    <br/>
+    <label for="numberOfPuffs">Enter numberOfPuffs:</label>
+    <input type="text" th:field="*{numberOfPuffs}" id="numberOfPuffs"/>
+    <div style="color: red" th:if="${#fields.hasErrors('numberOfPuffs')}" th:errors="*{numberOfPuffs}">Number Of Puffs
+        error
+    </div>
+    <br/>
+    <label for="color">Enter color:</label>
+    <input type="text" th:field="*{color}" id="color"/>
+    <div style="color: red" th:if="${#fields.hasErrors('color')}" th:errors="*{color}">color
+        error
+    </div>
+    <br/>
+    <button type="submit" class="cigarette-button">Добавить электронку!</button>
+</form>
+</body>
+</html>
