@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Smoke House</title>
+    <style>
+        body {
+            background-color: #1a1a2e;
+            background-image: url('/img/sm.jpg');
+            background-size: auto;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .header {
+            position: relative;
+            transform: translateY(-30%);
+        }
+
+        .cigarette-buttons {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            margin-top: 50px;
+        }
+
+        .cigarette-button {
+            display: inline-block;
+            padding: 10px 20px;
+            border: 3px solid #00bcd4;
+            border-radius: 5px;
+            background-color: #00bcd4;
+            color: black;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+            transition: all 0.3s ease;
+            margin-right: 20px;
+        }
+
+
+        .cigarette-button:hover {
+            transform: scale(1.1);
+        }
+
+        h1 {
+            font-size: 3rem;
+            text-align: center;
+        }
+
+        hr {
+            border: none;
+            border-top: 3px solid #00bcd4;
+            margin: 0 auto;
+            width: 50%;
+            margin-top: 50px;
+            margin-bottom: 50px;
+        }
+    </style>
+</head>
+<body>
+<div class="header">
+    <h1>Smoke House</h1>
+    <hr>
+</div>
+
+<div class="cigarette-buttons">
+    <a href="/disposable_v" class="cigarette-button">Разовые электронки</a>
+    <a href="/cigarettes" class="cigarette-button">Сигареты</a>
+    <a href="/users" class="cigarette-button">Юзеры</a>
+</div>
+</body>
+</html>

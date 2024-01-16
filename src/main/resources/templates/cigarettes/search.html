@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Поиск</title>
@@ -19,13 +19,16 @@
     </div>
 
     <div th:each="cigarette : ${cigarettes}">
-        <p th:text="${cigarette.getName() + ', ' + cigarette.getDateOfIssue() + ', ' + cigarette.getPrice()}"></p>
+        <p th:text="${cigarette.getName() + ', ' + cigarette.getPrice()}"></p>
 
-        <div th:if="${cigarette.getOwner() != null}">
-            <span>Сигареты у: </span><span th:text="${cigarette.getOwner().getName()}"></span>
+        <div th:if="${!cigarette.getUsersList().isEmpty()}">
+            <span>Сигареты есть у: </span>
+            <div th:each="user : ${cigarette.getUsersList()}">
+                <p th:text="${user.getName()}"></p>
+            </div>
         </div>
 
-        <div th:if="${cigarette.getOwner() == null}">
+        <div th:if="${cigarette.getUsersList().isEmpty()}">
             <span>Сигареты не назначены</span>
         </div>
 

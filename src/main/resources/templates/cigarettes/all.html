@@ -9,16 +9,20 @@
             background-size: cover;
             background-position: top;
         }
+
         tr:nth-child(even) {
             background-color: #f2f2f2;
         }
+
         tr {
             border-bottom: 1px solid black;
         }
+
         th, td {
             padding: 10px;
             border: 1px solid aquamarine;
         }
+
         .cigarette-button {
             display: inline-block;
             padding: 10px 20px;
@@ -34,6 +38,25 @@
         }
 
         .cigarette-button:hover {
+            transform: scale(1.1);
+        }
+
+        .cigarette_search-button {
+            display: inline-block;
+            padding: 10px 20px;
+            border: 3px solid #00bcd4;
+            border-radius: 5px;
+            background-color: #00bcd4;
+            color: black;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+            transition: all 0.3s ease;
+            float: right;
+        }
+
+        .cigarette_search-button:hover {
             transform: scale(1.1);
         }
     </style>
@@ -68,6 +91,7 @@
 </table>
 <br/>
 <hr/>
+<a href="/cigarettes/search" class="cigarette_search-button">Поиск</a>
 <a href="/cigarettes/new" class="cigarette-button">Добавить сигареты</a>
 
 </body>
