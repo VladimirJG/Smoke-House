@@ -10,9 +10,12 @@ import org.springframework.web.bind.annotation.*;
 import ru.danilov.Smoke.House.dto.CigarettesDTO;
 import ru.danilov.Smoke.House.dto.CigarettesResponse;
 import ru.danilov.Smoke.House.exceptions.CigaretteNotCreateException;
+import ru.danilov.Smoke.House.exceptions.ErrorResponse;
 import ru.danilov.Smoke.House.models.Cigarettes;
 import ru.danilov.Smoke.House.services.CigarettesService;
-import ru.danilov.Smoke.House.exceptions.ErrorResponse;
+
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import static ru.danilov.Smoke.House.util.ErrorsUtil.returnErrorsToClient;
@@ -56,6 +59,12 @@ public class CigarettesController {
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
+    @GetMapping("{id}/getUsersOwnerOfCigarette")
+    public List<String> getUsersOwnerOfCigarette(@PathVariable("id") int id) {
+        return cigarettesService.getCigarettesOwnersName(id);
+    }
+
+
     private CigarettesDTO convertToCigarettesDTO(Cigarettes cigarette) {
         return modelMapper.map(cigarette, CigarettesDTO.class);
     }
@@ -63,11 +72,12 @@ public class CigarettesController {
     private Cigarettes convertToCigarette(CigarettesDTO cigarettesDTO) {
         return modelMapper.map(cigarettesDTO, Cigarettes.class);
     }
+
     @ExceptionHandler
     private ResponseEntity<ErrorResponse> handleException(CigaretteNotCreateException e) {
         ErrorResponse response = new ErrorResponse(
                 e.getMessage(),
-                System.currentTimeMillis()
+                LocalDateTime.now()
         );
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }

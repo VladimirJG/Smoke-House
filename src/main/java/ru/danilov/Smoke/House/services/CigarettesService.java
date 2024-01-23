@@ -11,6 +11,7 @@ import ru.danilov.Smoke.House.repositories.CigarettesRepository;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -70,6 +71,10 @@ public class CigarettesService {
 
     public List<User> getCigarettesOwner(int id) {
         return cigarettesRepository.findById(id).map(Cigarettes::getUsersList).orElse(null);
+    }
+
+    public List<String> getCigarettesOwnersName(int id) {
+        return Objects.requireNonNull(cigarettesRepository.findById(id).map(Cigarettes::getUsersList).orElse(null)).stream().map(User::getName).toList();
     }
 
     public List<Cigarettes> searchByName(String query) {
